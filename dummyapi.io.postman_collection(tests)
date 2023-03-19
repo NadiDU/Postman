@@ -1,0 +1,844 @@
+{
+	"info": {
+		"_postman_id": "ae8398bf-1c6e-49af-b465-d80abd920ec8",
+		"name": "dummyapi.io",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23276538"
+	},
+	"item": [
+		{
+			"name": "User list no autorization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 403ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pagination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 700ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(700);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user?page=1&limit=50",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "50"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.environment.set(\"email\",jsonData.email);\r",
+							"pm.environment.set(\"userId\",jsonData.id);\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"X-Cache\", function () {\r",
+							"    pm.response.to.have.header(\"X-Cache\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{$randomEmail}}",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "{{$randomLastName}}",
+							"type": "text"
+						},
+						{
+							"key": "firstName",
+							"value": "{{$randomFirstName}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user/create",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "User create",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Nadya\",\r\n    \"lastName\": \"QA\",\r\n    \"email\": \"Nadya.Dirin@ya.ru\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dummyapi.io/data/v1/user/create",
+							"protocol": "https",
+							"host": [
+								"dummyapi",
+								"io"
+							],
+							"path": [
+								"data",
+								"v1",
+								"user",
+								"create"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Content-Length",
+							"value": "180"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Etag",
+							"value": "W/\"b4-47fhnGHF9JguXnqGOW5jKP5ilis\""
+						},
+						{
+							"key": "Function-Execution-Id",
+							"value": "zk0ddjtvep25"
+						},
+						{
+							"key": "Server",
+							"value": "Google Frontend"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=31556926"
+						},
+						{
+							"key": "X-Cloud-Trace-Context",
+							"value": "bc9f42ea8a268b3985799fb83aa15a38;o=1"
+						},
+						{
+							"key": "X-Country-Code",
+							"value": "RU"
+						},
+						{
+							"key": "Accept-Ranges",
+							"value": "bytes"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 19 Mar 2023 08:13:15 GMT"
+						},
+						{
+							"key": "X-Served-By",
+							"value": "cache-fra-eddf8230111-FRA"
+						},
+						{
+							"key": "X-Cache",
+							"value": "MISS"
+						},
+						{
+							"key": "X-Cache-Hits",
+							"value": "0"
+						},
+						{
+							"key": "X-Timer",
+							"value": "S1679213595.992022,VS0,VE155"
+						},
+						{
+							"key": "Vary",
+							"value": "cookie,need-authorization, x-fh-requested-host, accept-encoding"
+						},
+						{
+							"key": "alt-svc",
+							"value": "h3=\":443\";ma=86400,h3-29=\":443\";ma=86400,h3-27=\":443\";ma=86400"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"6416c41b44521e7ac89b3b63\",\n    \"firstName\": \"Nadya\",\n    \"lastName\": \"QA\",\n    \"email\": \"nadya.dirin@ya.ru\",\n    \"registerDate\": \"2023-03-19T08:13:15.076Z\",\n    \"updatedDate\": \"2023-03-19T08:13:15.076Z\"\n}"
+				}
+			]
+		},
+		{
+			"name": "User Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"firstName\": \"Nadezhda\",\r\n\"lastName\": \"Durina\",\r\n\"phone\": 12345678\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user/{{userId}}",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"firstName\": \"Nadezhda\",\r\n\"lastName\": \"Durina\",\r\n\"phone\": 12345678\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user/{{userId}}",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"pm.environment.set(\"postId\",jsonData.id);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"text\": \"text\",\r\n\"image\":\"https://randomuser.me/api/portraits/med/men/59.jpg\",\r\n\"likes\": 0,\r\n\"tags\": \"QA\",\r\n\"owner\": \"{{userId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/post/create",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"post",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Chek post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user/{{userId}}",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/post",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"pm.environment.set(\"commentId\",jsonData.id);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\"message\": \"Have a good day\",\r\n\"owner\": \"{{userId}}\",\r\n\"post\": \"{{postId}}\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/comment/create",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"comment",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\"message\": \"Have a good day\",\r\n\"owner\": {{userId}},\r\n\"post\": {{postId}}\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyapi.io/data/v1//user/{{userId}}/comment",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"",
+						"user",
+						"{{userId}}",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Del Comm",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\"message\": \"Have a good day\",\r\n\"owner\": \"63e9db542c0fcb4a408c7a2a\",\r\n\"post\": \"63e9e686bf8b5a33589dbb6a\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/comment/{{commentId}}",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"comment",
+						"{{commentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check comment delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user/{{userId}}/comment",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user",
+						"{{userId}}",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\"message\": \"Have a good day\",\r\n\"owner\": \"63e9db542c0fcb4a408c7a2a\",\r\n\"post\": \"63e9e686bf8b5a33589dbb6a\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user/{{userId}}",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check user delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 404ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\"message\": \"Have a good day\",\r\n\"owner\": \"63e9db542c0fcb4a408c7a2a\",\r\n\"post\": \"63e9e686bf8b5a33589dbb6a\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user/{{userId}}",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "63e9c9ae231a9acfcee0d9ca",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "app-id",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
