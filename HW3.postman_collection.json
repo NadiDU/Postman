@@ -1,0 +1,541 @@
+{
+	"info": {
+		"_postman_id": "e2c7e92d-5573-45be-92d2-3121775b208f",
+		"name": "HW3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23276538"
+	},
+	"item": [
+		{
+			"name": "First",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://162.55.220.72:5005/login",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Raw Json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Structure json\", function () {\r",
+							"    pm.response.to.have.jsonSchema;\r",
+							"});\r",
+							"\r",
+							"let resp_salary = pm.response.json();\r",
+							"console.log(resp_salary)\r",
+							"let req_salary = pm.request.toJSON();\r",
+							"console.log(req_salary)\r",
+							"\r",
+							"pm.test(\"start_qa_salary\", function(){\r",
+							"     pm.expect(req_salary.start_qa_salary).to.eql(resp_salary.person.start_qa_salary)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"qa_salary_after_6_months\", function(){\r",
+							"     pm.expect(+resp_salary.person.qa_salary_after_6_months).to.eql(+req_salary.qa_salary_after_6_months*2)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"qa_salary_after_12_months\", function(){\r",
+							"     pm.expect(+resp_salary.person.qa_salary_after_12_months).to.eql(+req_salary.qa_salary_after_12_months*2.9)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"u_salary_1_5_year\", function(){\r",
+							"     pm.expect(+resp_salary.u_salary_1_5_year).to.eql(+req_salary.u_salary_1_5_year*4)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Достать значение из поля u_salary_1_5_year\", function(){\r",
+							"pm.environment.set(resp_salary.person.u_salary_1_5_year)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"age\": 32,\r\n\"salary\": 7000,\r\n\"name\": \"Nadya\",\r\n\"auth_token\": \"/s34lfgbj/None/jjd909/47214kjkWpqc3646None428341evny\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Salary",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "salary",
+							"value": "28000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/get_test_user",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"get_test_user"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Structure json\", function () {\r",
+							"    pm.response.to.have.jsonSchema;\r",
+							"});\r",
+							"\r",
+							"let resp_salary = pm.response.json();\r",
+							"console.log(resp_salary)\r",
+							"let req_salary = pm.request.toJSON();\r",
+							"console.log(req_salary)\r",
+							"\r",
+							"console.log(+resp_salary.salary[0])\r",
+							"console.log(+resp_salary.salary[1])\r",
+							"console.log(+resp_salary.salary[2])\r",
+							"\r",
+							"pm.test(\"Проверка коэф(1) start_qa_salary\", function(){\r",
+							"     pm.expect(+req_salary.salary).to.eql(+resp_salary[0])\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка коэф(2) qa_salary_after_6_months\", function(){\r",
+							"     pm.expect(+req_salary.salary*2).to.eql(+resp_salary[0])\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка коэф(2.9) qa_salary_after_12_months\", function(){\r",
+							"     pm.expect(+req_salary.salary*2.9).to.eql(+resp_salary[0])\r",
+							"});\r",
+							"\r",
+							"pm.test(\" Проверка коэф(4) u_salary_1_5_year\", function(){\r",
+							"     pm.expect(+req_salary.salary*2.9).to.eql(+resp_salary[0])\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Прверка, что 2-й элемент массива salary больше 0-го\", function() {\r",
+							"     pm.expect(+resp_salary.salary[2]).to.be.above(+resp_salary.salary[0])\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Прверка, что 2-й элемент массива salary больше 1-го\", function() {\r",
+							"     pm.expect(+resp_salary.salary[2]).to.be.above(+resp_salary.salary[1])\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "32",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "7000",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Nadya",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "/s34lfgbj/None/jjd909/47214kjkWpqc3646None428341evny",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/new_data",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"new_data"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Structure json\", function () {\r",
+							"    pm.response.to.have.jsonSchema;\r",
+							"});\r",
+							"\r",
+							"let resp_weght = pm.response.json();\r",
+							"console.log(resp_weght)\r",
+							"let req_weght = pm.request.toJSON();\r",
+							"console.log(req_weght)\r",
+							"\r",
+							"\r",
+							"pm.test(\"Проверка коэф dayily_food\", function(){\r",
+							"     pm.expect(+resp_weght.daily_food).to.eql(+req_weght.body.formdata[1].value* 0.012)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка коэф dayily_sleep\", function(){\r",
+							"     pm.expect(+resp_weght.daily_sleep).to.eql(+req_weght.body.formdata[1].value*2.5)\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "weight",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Qatik",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "/s34lfgbj/None/jjd909/47214kjkWpqc3646None428341evny",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/test_pet_info",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"test_pet_info"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Structure json\", function () {\r",
+							"    pm.response.to.have.jsonSchema;\r",
+							"});\r",
+							"\r",
+							"let env_name = pm.environment.get('name')\r",
+							"console.log(env_name)\r",
+							"let name = pm.request.toJSON();\r",
+							"console.log(name)\r",
+							"\r",
+							"pm.test(\"name = env name\", function(){\r",
+							"     pm.expect(name.body.formdata[2].value).to.eql(env_name)\r",
+							"});\r",
+							"\r",
+							"let resp_age = pm.response.json();\r",
+							"console.log(resp_age)\r",
+							"let req_age = pm.request.toJSON();\r",
+							"console.log(req_age)\r",
+							"\r",
+							"pm.test(\"age_resp=age_req\", function(){\r",
+							"     pm.expect(resp_age.age).to.eql(req_age.body.formdata[0].value)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "32",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "7000",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Nadya",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "/s34lfgbj/None/jjd909/47214kjkWpqc3646None428341evny",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/get_test_user",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"get_test_user"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Currency",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "auth_token",
+							"value": "/s34lfgbj/None/jjd909/47214kjkWpqc3646None428341evny",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://54.157.99.22:80/currency",
+					"protocol": "http",
+					"host": [
+						"54",
+						"157",
+						"99",
+						"22"
+					],
+					"port": "80",
+					"path": [
+						"currency"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Currency bin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Structure json\", function () {\r",
+							"    pm.response.to.have.jsonSchema;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "auth_token",
+							"value": "/s34lfgbj/None/jjd909/47214kjkWpqc3646None428341evny",
+							"type": "text"
+						},
+						{
+							"key": "curr_code",
+							"value": "22",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://54.157.99.22:80/curr_byn",
+					"protocol": "http",
+					"host": [
+						"54",
+						"157",
+						"99",
+						"22"
+					],
+					"port": "80",
+					"path": [
+						"curr_byn"
+					],
+					"query": [
+						{
+							"key": "auth_token",
+							"value": "s34lfgbj/None/jjd909/13295kjkWpqc2483None152483evny",
+							"disabled": true
+						},
+						{
+							"key": "curr_code",
+							"value": "22",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
