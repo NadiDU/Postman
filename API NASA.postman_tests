@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "f99a9741-3d79-4128-88d9-54c73eadff28",
+		"name": "API NASA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23276538"
+	},
+	"item": [
+		{
+			"name": "APOD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resp_pic = pm.response.json();\r",
+							"console.log(resp_pic)\r",
+							"let req_pic = pm.request.toJSON();\r",
+							"console.log(req_pic)\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"hdurl\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"url\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"let req_pic_hdurl = pm.request.hdurl\r",
+							"console.log(req_pic_hdurl)\r",
+							"pm.test(\"Verify the status\"  , function () {\r",
+							"        pm.expect(pm.response.hdurl, \"hdurl\").not.equal(null);\r",
+							"  });\r",
+							"\r",
+							"  let req_pic_url = pm.request.url\r",
+							"console.log(req_pic_url)\r",
+							"pm.test(\"Verify the status\"  , function () {\r",
+							"        pm.expect(pm.response.url, \"url\").not.equal(null);\r",
+							"  });\r",
+							"\r",
+							"  let imageUrl = pm.response.json().url;\r",
+							"  console.log(\"image Url:\" + imageUrl);\r",
+							"\r",
+							"   let imagehdUrl = pm.response.json().url;\r",
+							"  console.log(\"image hdUrl:\" + imagehdUrl);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.nasa.gov/planetary/apod?api_key=XVxpZk4TLe1ighFgKsKiXnfaaULPxdQ2wKqDuBHd",
+					"protocol": "https",
+					"host": [
+						"api",
+						"nasa",
+						"gov"
+					],
+					"path": [
+						"planetary",
+						"apod"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "XVxpZk4TLe1ighFgKsKiXnfaaULPxdQ2wKqDuBHd"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "APOD demo",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY",
+					"protocol": "https",
+					"host": [
+						"api",
+						"nasa",
+						"gov"
+					],
+					"path": [
+						"planetary",
+						"apod"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "DEMO_KEY"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Moon",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://trek.nasa.gov/tiles/apidoc/trekAPI.html?body=moon",
+					"protocol": "https",
+					"host": [
+						"trek",
+						"nasa",
+						"gov"
+					],
+					"path": [
+						"tiles",
+						"apidoc",
+						"trekAPI.html"
+					],
+					"query": [
+						{
+							"key": "body",
+							"value": "moon"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
